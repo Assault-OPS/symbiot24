@@ -10,8 +10,19 @@ class _HomeState extends State<Home> {
   final formKey = GlobalKey<FormState>(); //key for form
   String? username = "";
   int? age = 0;
-  String? gender = "";
+  int? selectedRadio;
   bool isSubmitted = false;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedRadio = null;
+  }
+
+  void setSelectedRadio(int val) {
+    setState(() => selectedRadio = val);
+  }
+
   @override
   Widget build(BuildContext context) {
     final double height= MediaQuery.of(context).size.height;
@@ -54,25 +65,42 @@ class _HomeState extends State<Home> {
                   },
                   onSaved: (value) => setState(() => age = int.tryParse(value!))
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    labelText: "Enter gender"
-                  ),
-                  onSaved: (value) => setState(() => gender = value)
+                SizedBox(height:25),
+                Row(
+                  children: [
+                  Radio(
+                    value: 1,
+                    groupValue: selectedRadio,
+                    activeColor: Colors.lightBlue,
+                    onChanged: (value) => setSelectedRadio(value!)
+                    ),
+                    Text("Male")
+                  ]
                 ),
-                SizedBox(height: 50),
+                Row(
+                  children: [
+                  Radio(
+                    value: 0,
+                    groupValue: selectedRadio,
+                    activeColor: Colors.lightBlue,
+                    onChanged: (value) => setSelectedRadio(value!)
+                    ),
+                    Text("Female")
+                  ]
+                ),
+                SizedBox(height: 25),
                 Row(
                   children: [
                     ElevatedButton(
                       child: Text("Submit"),
                       onPressed: () {
                         final isValid = formKey.currentState!.validate();
-                        if(isValid) {
+                        if(isValid && selectedRadio != null) {
                           formKey.currentState!.save();
                           isSubmitted = true;
                           print(username);
                           print(age);
-                          print(gender);
+                          print(selectedRadio == 0 ? "Female" : "Male");
                         }
                       }
                     ),

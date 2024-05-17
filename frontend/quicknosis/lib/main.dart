@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import '../pages/form.dart';
-import '../pages/symptoms.dart';
 
 void main() {
   runApp(const MyApp());
