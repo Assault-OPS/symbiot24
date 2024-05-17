@@ -6,14 +6,12 @@ class SymptomButton extends StatefulWidget {
   final double width;
   final double height;
   final List<IconData> icons;
-  final String data;
   SymptomButton(
     {
       super.key,
       required double this.width,
       required double this.height,
       required List<IconData> this.icons,
-      required String this.data
     }
   );
 
@@ -26,7 +24,7 @@ class _SymptomButtonState extends State<SymptomButton> {
   bool isSelected2 = false;
   bool isSelected3 = false;
   bool isSelected4 = false;
-  
+  String? info;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -43,8 +41,10 @@ class _SymptomButtonState extends State<SymptomButton> {
                 child: IconButton(
                   icon: Icon(widget.icons[0], color: Colors.white),
                   onPressed: () {setState(() {
+                    if(isSelected1 == false) info = "filter_1";
                     isSelected1 = !isSelected1;
                   }
+
                   );
                   }
                 )
@@ -59,6 +59,7 @@ class _SymptomButtonState extends State<SymptomButton> {
                 child: IconButton(
                   icon: Icon(widget.icons[1], color: Colors.white),
                   onPressed: () {setState(() {
+                    if(isSelected2 == false) info = "filter_2";
                     isSelected2 = !isSelected2;
                   }
                   );
@@ -80,6 +81,7 @@ class _SymptomButtonState extends State<SymptomButton> {
                 child: IconButton(
                   icon: Icon(widget.icons[2], color: Colors.white),
                   onPressed: () {setState(() {
+                    if(isSelected1 == false) info = "filter_3";
                     isSelected3 = !isSelected3;
                   }
                   );
@@ -96,6 +98,7 @@ class _SymptomButtonState extends State<SymptomButton> {
                 child: IconButton(
                   icon: Icon(widget.icons[3], color: Colors.white),
                   onPressed: () {setState(() {
+                    if(isSelected1 == false) info = "filter_4";
                     isSelected4 = !isSelected4;
                   }
                   );
@@ -172,7 +175,7 @@ class _SymptomsState extends State<Symptoms> {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30),
-            child: SymptomButton(width: 150, height: 150, icons: [FontAwesomeIcons.brain, FontAwesomeIcons.heart, FontAwesomeIcons.eye, FontAwesomeIcons.hand], data: "brain"),
+            child: SymptomButton(width: 150, height: 150, icons: [FontAwesomeIcons.brain, FontAwesomeIcons.heart, FontAwesomeIcons.eye, FontAwesomeIcons.hand]),
           ),
           Container(
             width: MediaQuery.of(context).size.width,
