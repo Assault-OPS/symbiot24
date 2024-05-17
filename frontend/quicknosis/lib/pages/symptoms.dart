@@ -5,13 +5,15 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 class SymptomButton extends StatefulWidget {
   final double width;
   final double height;
-  final IconData icon;
+  final List<IconData> icons;
+  final String data;
   SymptomButton(
     {
       super.key,
       required double this.width,
       required double this.height,
-      required IconData this.icon
+      required List<IconData> this.icons,
+      required String this.data
     }
   );
 
@@ -20,20 +22,90 @@ class SymptomButton extends StatefulWidget {
 }
 
 class _SymptomButtonState extends State<SymptomButton> {
-  bool isSelected = false;
-  String? data;
+  bool isSelected1 = false;
+  bool isSelected2 = false;
+  bool isSelected3 = false;
+  bool isSelected4 = false;
+  
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: widget.width,
-      height: widget.height,
-      color: isSelected ? Colors.red : Colors.lightBlue,
-      child: IconButton(
-        icon: Icon(widget.icon, color: Colors.white),
-        onPressed: () {setState(() {
-          isSelected = !isSelected;
-        });}
-      )
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: widget.width,
+                height: widget.height,
+                color: isSelected1 ? Colors.red : Colors.lightBlue,
+                child: IconButton(
+                  icon: Icon(widget.icons[0], color: Colors.white),
+                  onPressed: () {setState(() {
+                    isSelected1 = !isSelected1;
+                  }
+                  );
+                  }
+                )
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: widget.width,
+                height: widget.height,
+                color: isSelected2 ? Colors.red : Colors.lightBlue,
+                child: IconButton(
+                  icon: Icon(widget.icons[1], color: Colors.white),
+                  onPressed: () {setState(() {
+                    isSelected2 = !isSelected2;
+                  }
+                  );
+                  }
+                )
+              ),
+            ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: widget.width,
+                height: widget.height,
+                color: isSelected3 ? Colors.red : Colors.lightBlue,
+                child: IconButton(
+                  icon: Icon(widget.icons[2], color: Colors.white),
+                  onPressed: () {setState(() {
+                    isSelected3 = !isSelected3;
+                  }
+                  );
+                  }
+                )
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                width: widget.width,
+                height: widget.height,
+                color: isSelected4 ? Colors.red : Colors.lightBlue,
+                child: IconButton(
+                  icon: Icon(widget.icons[3], color: Colors.white),
+                  onPressed: () {setState(() {
+                    isSelected4 = !isSelected4;
+                  }
+                  );
+                  }
+                )
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
@@ -98,32 +170,9 @@ class _SymptomsState extends State<Symptoms> {
       ),
       body: Column(
         children: [
-          SizedBox(height: 50),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SymptomButton(width: 150, height: 150, icon: FontAwesomeIcons.brain),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SymptomButton(width: 150, height: 150, icon: FontAwesomeIcons.heart),
-              ),
-            ]
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SymptomButton(width: 150, height: 150, icon: FontAwesomeIcons.eye),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SymptomButton(width: 150, height: 150, icon: FontAwesomeIcons.hand),
-              ),
-            ]
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 30),
+            child: SymptomButton(width: 150, height: 150, icons: [FontAwesomeIcons.brain, FontAwesomeIcons.heart, FontAwesomeIcons.eye, FontAwesomeIcons.hand], data: "brain"),
           ),
           Container(
             width: MediaQuery.of(context).size.width,
