@@ -1,5 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:multi_dropdown/enum/app_enums.dart';
+import 'package:multi_dropdown/models/chip_config.dart';
+import 'package:multi_dropdown/models/network_config.dart';
+import 'package:multi_dropdown/models/value_item.dart';
+import 'package:multi_dropdown/multiselect_dropdown.dart';
+import 'package:multi_dropdown/widgets/hint_text.dart';
+import 'package:multi_dropdown/widgets/selection_chip.dart';
+import 'package:multi_dropdown/widgets/single_selected_item.dart';
+import 'package:quicknosis/wrapper.dart';
+
 
 
 class SymptomButton extends StatefulWidget {
@@ -24,132 +34,153 @@ class _SymptomButtonState extends State<SymptomButton> {
   bool isSelected2 = false;
   bool isSelected3 = false;
   bool isSelected4 = false;
-  String? info;
+  List<String> all_filters = ["Headache", "Heart Attack", "Blindness", "Rashes"];
+  List<String> filters = [
+        "fatigue",
+        "mood swings",
+        "weight loss",
+        "restlessness",
+        "sweating",
+        "diarrhoea",
+        "fast heart rate",
+        "excessive hunger",
+        "muscle weakness",
+        "irritability",
+        "abnormal menstruation",
+  ];
+  List<String> selectedFilters = [];
+  final MultiSelectController _controller = MultiSelectController();
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: widget.width,
-                height: widget.height,
-                color: isSelected1 ? Colors.red : Colors.lightBlue,
-                child: IconButton(
-                  icon: Icon(widget.icons[0], color: Colors.white),
-                  onPressed: () {setState(() {
-                    if(isSelected1 == false) info = "filter_1";
-                    isSelected1 = !isSelected1;
-                  }
-
-                  );
-                  }
-                )
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: widget.width,
+                    height: widget.height,
+                    color: isSelected1 ? Colors.red : Colors.lightBlue,
+                    child: IconButton(
+                      icon: Icon(widget.icons[0], color: Colors.white),
+                      onPressed: () {setState(() {
+                        if(isSelected1 == false) {
+                          if(!filters.contains("Headache"))
+                            filters.add("Headache");
+                        }
+                        isSelected1 = !isSelected1;
+                      }
+                      );
+                      }
+                    )
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: widget.width,
+                    height: widget.height,
+                    color: isSelected2 ? Colors.red : Colors.lightBlue,
+                    child: IconButton(
+                      icon: Icon(widget.icons[1], color: Colors.white),
+                      onPressed: () {setState(() {
+                        if(isSelected2 == false) {
+                          if(!filters.contains("Heart Attack"))
+                            filters.add("Heart Attack");
+                        }
+                        isSelected2 = !isSelected2;
+                      }
+                      );
+                      }
+                    )
+                  ),
+                ),
+              ],
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: widget.width,
-                height: widget.height,
-                color: isSelected2 ? Colors.red : Colors.lightBlue,
-                child: IconButton(
-                  icon: Icon(widget.icons[1], color: Colors.white),
-                  onPressed: () {setState(() {
-                    if(isSelected2 == false) info = "filter_2";
-                    isSelected2 = !isSelected2;
-                  }
-                  );
-                  }
-                )
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: widget.width,
+                    height: widget.height,
+                    color: isSelected3 ? Colors.red : Colors.lightBlue,
+                    child: IconButton(
+                      icon: Icon(widget.icons[2], color: Colors.white),
+                      onPressed: () {setState(() {
+                        if(isSelected1 == false) {
+                          if(!filters.contains("Blindness"))
+                            filters.add("Blindness");
+                        }
+                        isSelected3 = !isSelected3;
+                      }
+                      );
+                      }
+                    )
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    width: widget.width,
+                    height: widget.height,
+                    color: isSelected4 ? Colors.red : Colors.lightBlue,
+                    child: IconButton(
+                      icon: Icon(widget.icons[3], color: Colors.white),
+                      onPressed: () {setState(() { 
+                        if(isSelected1 == false) {
+                          if(!filters.contains("Rashes"))
+                            filters.add("Rashes");
+                        };
+                        isSelected4 = !isSelected4;
+                      }
+                      );
+                      }
+                    )
+                  ),
+                ),
+              ],
             ),
+            MultiSelectDropDown(
+            controller: _controller,
+            optionsBackgroundColor: Colors.grey[200],
+            onOptionSelected: (options) {
+              selectedFilters = options.map((ValueItem<dynamic> item) {
+                  return item.label;
+              }).toList();
+              print(selectedFilters);
+            },
+            options: filters.map(
+              (String item) {
+                return ValueItem<dynamic>(label: item, value: item);
+              }
+            ).toList(),
+            maxItems: 4,
+            disabledOptions: const [ValueItem(label: 'Option 1', value: '1')],
+            selectionType: SelectionType.multi,
+            chipConfig: const ChipConfig(wrapType: WrapType.wrap),
+            dropdownHeight: 200,
+            optionTextStyle: const TextStyle(fontSize: 20),
+            selectedOptionIcon: const Icon(Icons.check_circle),
+          ),
           ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: widget.width,
-                height: widget.height,
-                color: isSelected3 ? Colors.red : Colors.lightBlue,
-                child: IconButton(
-                  icon: Icon(widget.icons[2], color: Colors.white),
-                  onPressed: () {setState(() {
-                    if(isSelected1 == false) info = "filter_3";
-                    isSelected3 = !isSelected3;
-                  }
-                  );
-                  }
-                )
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                width: widget.width,
-                height: widget.height,
-                color: isSelected4 ? Colors.red : Colors.lightBlue,
-                child: IconButton(
-                  icon: Icon(widget.icons[3], color: Colors.white),
-                  onPressed: () {setState(() {
-                    if(isSelected1 == false) info = "filter_4";
-                    isSelected4 = !isSelected4;
-                  }
-                  );
-                  }
-                )
-              ),
-            ),
-          ],
-        ),
+        SizedBox(height: 100),
+        Center(
+          child: ElevatedButton(
+            onPressed: () async {
+              Map<String,dynamic>? response = await sendPostRequest(selectedFilters);
+              print('RESPONSE: ' + response.toString());
+            },
+            child: Text("Submit")
+          )
+        )
       ],
-    );
-  }
-}
-
-
-class SwitchGrid extends StatefulWidget {
-  @override
-  _SwitchGridState createState() => _SwitchGridState();
-}
-
-class _SwitchGridState extends State<SwitchGrid> {
-  List<bool> _switchValues = [false, false, false, false];
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // Number of columns
-          mainAxisSpacing: 10.0,
-          crossAxisSpacing: 10.0,
-          childAspectRatio: 1.0, // Aspect ratio of each grid item
-        ),
-        itemCount: 4, // Number of items in the grid
-        itemBuilder: (context, index) {
-          return Card(
-            elevation: 4.0,
-            child: Center(
-              child: Switch(
-                value: _switchValues[index],
-                onChanged: (bool newValue) {
-                  setState(() {
-                    _switchValues[index] = newValue;
-                  });
-                },
-              ),
-            ),
-          );
-        },
-      ),
     );
   }
 }
@@ -163,7 +194,6 @@ class Symptoms extends StatefulWidget {
 }
 
 class _SymptomsState extends State<Symptoms> {
-  String? _selectedItem;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,25 +206,6 @@ class _SymptomsState extends State<Symptoms> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 30),
             child: SymptomButton(width: 150, height: 150, icons: [FontAwesomeIcons.brain, FontAwesomeIcons.heart, FontAwesomeIcons.eye, FontAwesomeIcons.hand]),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.width,
-            child: DropdownButton<String>(
-              value: _selectedItem,
-              hint: Text('Select an item'),
-              onChanged: (newValue) {
-                setState(() {
-                  _selectedItem = newValue;
-                });
-              },
-              items: <String>['Item 1', 'Item 2', 'Item 3', 'Item 4']
-                  .map<DropdownMenuItem<String>>((String value) {
-                return DropdownMenuItem<String>(
-                  value: value,
-                  child: Text(value),
-                );
-              }).toList(),
-            ),
           ),
         ],
       )
